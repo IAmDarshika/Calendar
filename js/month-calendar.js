@@ -27,9 +27,10 @@
     options = options || {};
 
     this.options = Object.assign({}, defaultOptions, options);
+    console.log();
     this.container = document.querySelector(selector);
 
-     var getCurrentDate = new Date(2017, 1, 1);
+    var getCurrentDate = this.options.defaultDate || new Date();
     this.todaysMonth = getCurrentDate.getMonth();
     this.todaysYear = getCurrentDate.getFullYear();
     var todaysDay = getCurrentDate.getDay();
@@ -72,15 +73,11 @@
         if (day.getDay() === EOW) {
           (function() {
             html.push('<tr>' + week.reduce(function(acc, d) {
-
-              if(d.getDate() === self.todaysDate && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear){
+              if (d.getDate() === self.todaysDate && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear) {
                 return acc + '<td class="active">' + d.getDate() + '</td>';
-                console.log(d.getDate());
+              } else {
+                return acc + '<td>' + d.getDate() + '</td>';
               }
-              else
-                  {
-                    return acc + '<td>' + d.getDate() + '</td>';
-                  }
             }, '') + '</tr>');
           })(week)
           week = [];
