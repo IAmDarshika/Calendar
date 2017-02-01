@@ -1,0 +1,14 @@
+.calendar {
+  max-width: 320px;
+}
+
+.days {
+    text-align: center;
+}
+
+.active {
+    padding: 2px;
+    background: #1abc9c;
+    color: white !important
+}
+
