@@ -1,19 +1,8 @@
 (function() {
   'use strict';
-  var getCurrentDate = new Date(2017, 1, 1);
-  var todaysMonth = getCurrentDate.getMonth();
-  var todaysYear = getCurrentDate.getFullYear();
-  var todaysDay = getCurrentDate.getDay();
-  var todaysDate = getCurrentDate.getDate();
-  var firstDateCurrentMonth = new Date(todaysYear, todaysMonth, 1);
-  var lastDateCurrentMonth = new Date(todaysYear, todaysMonth + 1, 0);
-  var firstDayofMonth = firstDateCurrentMonth.getDay();
-  var lastDayofMonth = lastDateCurrentMonth.getDay();
+ 
   var SOW = 0,
       EOW = 6;
-  var firstPrintingDate = new Date(todaysYear, todaysMonth, 1 - firstDayofMonth);
-  var lastPrintingDate = new Date(todaysYear, todaysMonth + 1, EOW - lastDayofMonth);
-
 
   var defaultOptions = {
     months: [
@@ -39,19 +28,33 @@
 
     this.options = Object.assign({}, defaultOptions, options);
     this.container = document.querySelector(selector);
-    this.getWeekDays(this.container);
+
+     var getCurrentDate = new Date(2017, 1, 1);
+    this.todaysMonth = getCurrentDate.getMonth();
+    this.todaysYear = getCurrentDate.getFullYear();
+    var todaysDay = getCurrentDate.getDay();
+    this.todaysDate = getCurrentDate.getDate();
+    var firstDateCurrentMonth = new Date(this.todaysYear, this.todaysMonth, 1);
+    var lastDateCurrentMonth = new Date(this.todaysYear, this.todaysMonth + 1, 0);
+    var firstDayofMonth = firstDateCurrentMonth.getDay();
+    var lastDayofMonth = lastDateCurrentMonth.getDay();
+
+    this.firstPrintingDate = new Date(this.todaysYear, this.todaysMonth, 1 - firstDayofMonth);
+    this.lastPrintingDate = new Date(this.todaysYear, this.todaysMonth + 1, EOW - lastDayofMonth);
+
+    this.printMonth(this.container);
   }
 
-  MonthCalendar.prototype.getWeekDays = function(item) {
-
+  MonthCalendar.prototype.printMonth = function(item) {
+    var self = this;
     function printDaysInMonth() {
-      var dateHolder = firstPrintingDate;
+      var dateHolder = self.firstPrintingDate;
       var coolMonth = [];
       while (true) {
         if (
-          dateHolder.getDate() === lastPrintingDate.getDate() &&
-          dateHolder.getMonth() === lastPrintingDate.getMonth() &&
-          dateHolder.getFullYear() === lastPrintingDate.getFullYear()
+          dateHolder.getDate() === self.lastPrintingDate.getDate() &&
+          dateHolder.getMonth() === self.lastPrintingDate.getMonth() &&
+          dateHolder.getFullYear() === self.lastPrintingDate.getFullYear()
         ) {
           coolMonth.push(new Date(dateHolder.getTime()));
           break;
@@ -70,7 +73,7 @@
           (function() {
             html.push('<tr>' + week.reduce(function(acc, d) {
 
-              if(d.getDate() === todaysDate && d.getMonth() === todaysMonth && d.getFullYear() === todaysYear){
+              if(d.getDate() === self.todaysDate && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear){
                 return acc + '<td class="active">' + d.getDate() + '</td>';
                 console.log(d.getDate());
               }
@@ -97,11 +100,12 @@
       return coolDay.join('');
     }
 
+    
     var html = (function() {
       return [
         '<div class="calendar">',
         '<table style="width:80%">',
-        '<caption>' + defaultOptions.months[todaysMonth] + ',' + todaysYear + '</caption>',
+        '<caption>' + defaultOptions.months[self.todaysMonth] + ',' + self.todaysYear + '</caption>',
         '<tr class="days">',
         printWeekDay(),
         '</tr>',
