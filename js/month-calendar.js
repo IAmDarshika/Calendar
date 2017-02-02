@@ -5,7 +5,9 @@
       EOW = 6;
   var currentdate = new Date();
   var month = currentdate.getMonth(),
-      year = currentdate.getFullYear();
+      year = currentdate.getFullYear(),
+      day = currentdate.getDay(),
+      date = currentdate.getDate();
   var defaultOptions = {
     months: [
       'January',
@@ -76,7 +78,7 @@
           (function() {
             html.push('<tr>' + week.reduce(function(acc, d) {
 
-              if (d.getDate() === self.todaysDate && d.getMonth() === month && d.getFullYear() === year) {
+              if (d.getDate() === date && d.getMonth() === month && d.getFullYear() === year) {
                 return acc + '<td class="active">' + d.getDate() + '</td>';
               } else if (self.options.printAdjacentMonth === true && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear) {
                 return acc + '<td>' + d.getDate() + '</td>';
