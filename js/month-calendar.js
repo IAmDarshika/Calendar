@@ -106,8 +106,8 @@
     
     var html = (function() {
       return [
-        '<div class="calendar">',
-        '<table style="width:80%">',
+        '<div class="calendar" >',
+        '<table style="width:80%" class="table">',
         '<caption style="font-weight: bold;">' + defaultOptions.months[self.todaysMonth] + ',' + self.todaysYear + '</caption>',
         '<tr class="days">',
         printWeekDay(),
