@@ -3,7 +3,9 @@
  
   var SOW = 0,
       EOW = 6;
-
+  var currentdate = new Date();
+  var month = currentdate.getMonth(),
+      year = currentdate.getFullYear();
   var defaultOptions = {
     months: [
       'January',
@@ -20,24 +22,23 @@
       'December',
     ],
 
-    days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+    days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    printAdjacentMonth: true
   };
 
   function MonthCalendar(selector, options) {
     options = options || {};
 
     this.options = Object.assign({}, defaultOptions, options);
-    console.log();
     this.container = document.querySelector(selector);
-
     var getCurrentDate = this.options.defaultDate || new Date();
     this.todaysMonth = getCurrentDate.getMonth();
     this.todaysYear = getCurrentDate.getFullYear();
     var todaysDay = getCurrentDate.getDay();
     this.todaysDate = getCurrentDate.getDate();
-    var firstDateCurrentMonth = new Date(this.todaysYear, this.todaysMonth, 1);
+    this.firstDateCurrentMonth = new Date(this.todaysYear, this.todaysMonth, 1);
     var lastDateCurrentMonth = new Date(this.todaysYear, this.todaysMonth + 1, 0);
-    var firstDayofMonth = firstDateCurrentMonth.getDay();
+    var firstDayofMonth = this.firstDateCurrentMonth.getDay();
     var lastDayofMonth = lastDateCurrentMonth.getDay();
 
     this.firstPrintingDate = new Date(this.todaysYear, this.todaysMonth, 1 - firstDayofMonth);
@@ -60,9 +61,10 @@
           coolMonth.push(new Date(dateHolder.getTime()));
           break;
         }
-        coolMonth.push(new Date(dateHolder.getTime()));
 
+        coolMonth.push(new Date(dateHolder.getTime()));
         dateHolder.setDate(dateHolder.getDate() + 1);
+
       }
 
       var week = [],
@@ -73,18 +75,22 @@
         if (day.getDay() === EOW) {
           (function() {
             html.push('<tr>' + week.reduce(function(acc, d) {
-              if (d.getDate() === self.todaysDate && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear) {
+
+              if (d.getDate() === self.todaysDate && d.getMonth() === month && d.getFullYear() === year) {
                 return acc + '<td class="active">' + d.getDate() + '</td>';
-              } else {
+              } else if (self.options.printAdjacentMonth === true && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear) {
                 return acc + '<td>' + d.getDate() + '</td>';
+              } else if (self.options.printAdjacentMonth === false) {
+                  return acc + '<td>' + d.getDate() + '</td>';
+              } else {
+                return acc + '<td class="fade">' + '' + '</td>';
               }
+              
             }, '') + '</tr>');
           })(week)
           week = [];
         }
       });
-
-      // console.log(coolMonth);
       return html.join('');
     }
 
@@ -102,7 +108,7 @@
       return [
         '<div class="calendar">',
         '<table style="width:80%">',
-        '<caption>' + defaultOptions.months[self.todaysMonth] + ',' + self.todaysYear + '</caption>',
+        '<caption style="font-weight: bold;">' + defaultOptions.months[self.todaysMonth] + ',' + self.todaysYear + '</caption>',
         '<tr class="days">',
         printWeekDay(),
         '</tr>',
