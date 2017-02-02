@@ -5,45 +5,46 @@
 	<title>Calendar</title>
 	<link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
-<body>
+<body style="text-align: center;>
+  <h1 style="text-align: center;">Calendar</h1>
   <div id="container1"></div>
   <div id="container2"></div>
   <div id="container3"></div>
   <div id="container4"></div>
   <div id="container5"></div>
   <div id="container6"></div>
-
   <script type="text/javascript" src="js/month-calendar.js"></script>
   <script type="text/javascript">
    new MonthCalendar('#container1', {
-    defaultDate: null,
     startOfWeek: 0,
+    printAdjacentMonth: false
   });
-/*
+
    new MonthCalendar('#container2', {
-    defaultDate: null,
+    defaultDate: new Date(2017, 2, 1),
     startOfWeek: 1,
+    printAdjacentMonth: true
   });
 
    new MonthCalendar('#container3', {
-    defaultDate: null,
+    defaultDate: new Date(2017, 3, 1),
     startOfWeek: 0,
   });
 
    new MonthCalendar('#container4', {
-    defaultDate: null,
+    defaultDate: new Date(2017, 4, 1),
     startOfWeek: 1,
   });
 
    new MonthCalendar('#container5', {
-    defaultDate: null,
+    defaultDate: new Date(2017, 5, 1),
     startOfWeek: 0,
   });
    
    new MonthCalendar('#container6', {
-    defaultDate: null,
+    defaultDate: new Date(2017, 6, 1),
     startOfWeek: 0,
-  });*/
+  });
   </script>
 </body>
 </html>
