@@ -6,7 +6,6 @@
   var currentdate = new Date();
   var month = currentdate.getMonth(),
       year = currentdate.getFullYear(),
-      day = currentdate.getDay(),
       date = currentdate.getDate();
   var defaultOptions = {
     months: [
@@ -78,16 +77,10 @@
           (function() {
             html.push('<tr>' + week.reduce(function(acc, d) {
 
-              if (d.getDate() === date && d.getMonth() === month && d.getFullYear() === year) {
-                return acc + '<td class="active">' + d.getDate() + '</td>';
-              } else if (self.options.printAdjacentMonth === true && d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear) {
-                return acc + '<td>' + d.getDate() + '</td>';
-              } else if (self.options.printAdjacentMonth === false) {
-                  return acc + '<td>' + d.getDate() + '</td>';
-              } else {
-                return acc + '<td class="fade">' + '' + '</td>';
-              }
-              
+              var isToday = d.getDate() === date && d.getMonth() === month && d.getFullYear() === year;
+              var isInMonth = d.getMonth() === self.todaysMonth && d.getFullYear() === self.todaysYear;
+
+              return acc + '<td class="' + (isToday && isInMonth ? ' active ' : '') + (!isInMonth && self.options.printAdjacentMonth ? ' fade ' : '') + '">' + (isInMonth || self.options.printAdjacentMonth ? d.getDate() : '') + '</td>';
             }, '') + '</tr>');
           })(week)
           week = [];

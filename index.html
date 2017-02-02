@@ -6,7 +6,8 @@
 	<link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
 <body>
-  <h2> 2017 Calendar </h2>
+  <h2>2017 Calendar</h2>
+  <div id="container0"></div>
   <div id="container1"></div>
   <div id="container2"></div>
   <div id="container3"></div>
@@ -20,9 +21,15 @@
   <div id="container11"></div>
   <script type="text/javascript" src="js/month-calendar.js"></script>
   <script type="text/javascript">
-   new MonthCalendar('#container1', {
+  new MonthCalendar('#container0', {
+    defaultDate: new Date(2017, 0, 1),
     startOfWeek: 0,
     printAdjacentMonth: false
+  });
+   new MonthCalendar('#container1', {
+    defaultDate: new Date(2017, 1, 1),
+    startOfWeek: 0,
+    printAdjacentMonth: true
   });
 
    new MonthCalendar('#container2', {

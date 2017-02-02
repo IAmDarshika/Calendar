@@ -9,14 +9,21 @@ h2{
   text-align: center;
 }
 
+td:hover { 
+    background-color: #B0E0E6;
+    cursor:pointer;
+}
+Try it Yourself »
+
 .days {
     text-align: center;
 }
 
 .active {
     padding: 2px;
-    background: #1abc9c;
-    color: white !important
+    border-style: solid;
+    border-width: 1px;
+    color: blue;
 }
 
 .fade {
